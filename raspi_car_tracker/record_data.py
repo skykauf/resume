@@ -8,7 +8,7 @@ class DataRecorder:
         self.isStarted = False
         self.max_duration = max_dur
         self.start_datetime = datetime.now()
-        self.script_start_date = self.start_datetime.strftime("%m-%d-%Y")
+        self.script_start_datedir = os.path.join(datadir,self.start_datetime.strftime("%m-%d-%Y"))
         self.script_start_datetime = self.start_datetime.strftime("%m-%d-%Y_%H:%M:%S")
         self.start_timestamp = datetime.timestamp(self.start_datetime)
 
