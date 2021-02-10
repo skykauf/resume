@@ -3,6 +3,7 @@ from datetime import datetime
 import gps
 import os
 from config import *
+import requests
 
 class DataRecorder:
     def __init__(self,max_dur=10):
@@ -21,9 +22,9 @@ class DataRecorder:
         # Listen on port 2947 (gpsd) of localhost
         session = gps.gps("localhost", "2947")
         session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
-        lats=[]
-        longs=[]
-        latlongs=[]
+        self.lats=[]
+        self.longs=[]
+        self.latlongs=[]
         print("Starting record")
         with open(self.gps_filepath,'w') as f:
             f.write('latitude,longitude,gps_timestamp\n')
@@ -33,14 +34,14 @@ class DataRecorder:
                     if self.printAll:
                         print(report)
                     # Wait for a 'TPV' report and display the current time
+                    local_timestamp = datetime.timestamp(datetime.now())
                     if report['class'] == 'TPV':
                         lat = report['lat']
                         lon = report['lon']
-                        local_timestamp = datetime.timestamp(datetime.now())
-                        lats.append(lat)
-                        longs.append(lon)
-                        latlongs.append(str(lat))
-                        latlongs.append(str(lon))
+                        self.lats.append(lat)
+                        self.longs.append(lon)
+                        self.latlongs.append(str(lat))
+                        self.latlongs.append(str(lon))
                         # store data in csv file
                         f.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
                         
@@ -55,7 +56,8 @@ class DataRecorder:
                     print("GPSD has terminated")
                     
     def write_gps_route_raw(self):
-        map_params = {"key":openstreetmap_apikey,"bestfit":",".join([str(min(lats)-.01), str(min(longs)-.01), str(max(lats)+.01), str(max(longs)+.01)]), "size":"1920, 960", "shape":",".join(latlongs)}
+        map_params = {"key":openstreetmap_apikey,"bestfit":",".join([str(min(self.lats)-.01), str(min(self.longs)-.01), str(max(self.lats)+.01), str(max(self.longs)+.01)]), "size":"1920, 960", "shape":",".join(self.latlongs)}
+
         mapimage = requests.get("http://www.mapquestapi.com/staticmap/v4/getmap", params=map_params)
         if mapimage.status_code == 200:
             print("Successfully retrieved image")
