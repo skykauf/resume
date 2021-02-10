@@ -2,6 +2,7 @@
 from datetime import datetime
 import gps
 import os
+import config
 
 class DataRecorder:
     def __init__(self,max_dur=10):
