@@ -1,6 +1,7 @@
 # import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 from datetime import datetime
 import gps
+import os
 
 class DataRecorder:
     def __init__(self,max_dur=10):
