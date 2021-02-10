@@ -4,11 +4,13 @@ import gps
 import os
 from config import *
 import requests
+from PIL import Image
+from io import BytesIO
 
 class DataRecorder:
-    def __init__(self,max_dur=10):
+    def __init__(self,max_dur=10000):
         self.isStarted = False
-        self.printAll=True
+        self.printAll=False
         self.max_duration = max_dur
         
         self.start_datetime = datetime.now()
@@ -56,6 +58,7 @@ class DataRecorder:
                     print("GPSD has terminated")
                     
     def write_gps_route_raw(self):
+        # may want to reduce number of coordinates sent in map-query
         map_params = {"key":openstreetmap_apikey,"bestfit":",".join([str(min(self.lats)-.01), str(min(self.longs)-.01), str(max(self.lats)+.01), str(max(self.longs)+.01)]), "size":"1920, 960", "shape":",".join(self.latlongs)}
 
         mapimage = requests.get("http://www.mapquestapi.com/staticmap/v4/getmap", params=map_params)
