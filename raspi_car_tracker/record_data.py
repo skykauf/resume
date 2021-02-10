@@ -23,7 +23,7 @@ class DataRecorder:
         longs=[]
         latlongs=[]
         print("Starting record")
-        with open(gps_filepath,'w') as f:
+        with open(self.gps_filepath,'w') as f:
             f.write('latitude,longitude,gps_timestamp\n')
             while True:
                 try:
@@ -41,7 +41,7 @@ class DataRecorder:
                         f.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
                         
                         if local_timestamp-self.start_timestamp >self.max_duration:
-                            print(max_duration,"seconds elapsed")
+                            print(self.max_duration,"seconds elapsed")
                             break
                 except KeyError:
                     print("GPS not returning latitude or longitude")
@@ -59,8 +59,8 @@ class DataRecorder:
             print("Couldn't retrieve image")
             print(mapimage.text)
         i = Image.open(BytesIO(mapimage.content))
-        i.save(os.path.join(script_start_datedir,"ROUTEMAP_"+script_start_datetime+".jpg"))
-        print("saved image to", script_start_datedir)
+        i.save(os.path.join(self.script_start_datedir,"ROUTEMAP_"+self.script_start_datetime+".jpg"))
+        print("saved image to", self.script_start_datedir)
         print("SHOWN")
 
     def button_callback(channel):
