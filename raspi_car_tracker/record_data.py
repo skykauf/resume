@@ -8,15 +8,16 @@ from PIL import Image
 from io import BytesIO
 
 class DataRecorder:
-    def __init__(self,max_dur=10000):
-        self.isStarted = False
-        self.printAll=False
+    def __init__(self,max_dur=10):
+        self.printAll=True
         self.max_duration = max_dur
         
         self.start_datetime = datetime.now()
         self.script_start_datedir = os.path.join(datadir,self.start_datetime.strftime("%m-%d-%Y"))
         self.script_start_datetime = self.start_datetime.strftime("%m-%d-%Y_%H:%M:%S")
         self.start_timestamp = datetime.timestamp(self.start_datetime)
+
+        os.makedirs(self.script_start_datedir,exist_ok=True)
 
         self.gps_filepath = os.path.join(self.script_start_datedir,"GPS_"+self.script_start_datetime+'.csv')
 
@@ -37,7 +38,7 @@ class DataRecorder:
                         print(report)
                     # Wait for a 'TPV' report and display the current time
                     local_timestamp = datetime.timestamp(datetime.now())
-                    if report['class'] == 'TPV':
+                    if report['class'] == 'TPV' and report['mode'] > 1:
                         lat = report['lat']
                         lon = report['lon']
                         self.lats.append(lat)
@@ -46,7 +47,9 @@ class DataRecorder:
                         self.latlongs.append(str(lon))
                         # store data in csv file
                         f.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
-                        
+                    else:
+                        print("GPS not returning latitude or longitude")
+
                     if local_timestamp-self.start_timestamp >self.max_duration:
                         print(self.max_duration,"seconds elapsed")
                         break
@@ -58,6 +61,9 @@ class DataRecorder:
                     print("GPSD has terminated")
                     
     def write_gps_route_raw(self):
+        if len(self.lats)==0 or len(self.longs)==0:
+            print("No GPS coordinates to map on route")
+            return
         # may want to reduce number of coordinates sent in map-query
         map_params = {"key":openstreetmap_apikey,"bestfit":",".join([str(min(self.lats)-.01), str(min(self.longs)-.01), str(max(self.lats)+.01), str(max(self.longs)+.01)]), "size":"1920, 960", "shape":",".join(self.latlongs)}
 
@@ -74,10 +80,12 @@ class DataRecorder:
 
     def button_callback(channel):
         print("Button was pushed, flipping states!")
-        if self.isStarted:
-            self.isStarted = False
-        else:
-            self.isStarted = True
+
+if __name__=='__main__':
+    dr = DataRecorder()
+    dr.initialize_gps()
+    dr.write_gps_route_raw()
+    print("finished testing suite")
 
 # add a callback to external on/off button
 # GPIO.setwarnings(False) # Ignore warning for now
