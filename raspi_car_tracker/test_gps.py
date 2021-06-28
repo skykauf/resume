@@ -25,6 +25,7 @@ latlongs=[]
 print("Starting record")
 with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv'),'w') as f:
     f.write('latitude,longitude,gps_timestamp\n')
+    print("writing to gps file")
     while True:
         try:
             report = session.next()
