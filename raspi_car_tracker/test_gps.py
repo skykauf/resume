@@ -28,9 +28,9 @@ with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv')
     while True:
         try:
             report = session.next()
-            print(report)
             # Wait for a 'TPV' report and display the current time
             if report['class'] == 'TPV':
+                print(report)
                 lat = report['lat']
                 lon = report['lon']
                 local_timestamp = datetime.timestamp(datetime.now())
