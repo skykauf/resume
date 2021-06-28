@@ -44,35 +44,33 @@ class DataRecorder:
         print("Started GPS")
 
     def record_gps(self):
-        with  as f:
-            f.write('latitude,longitude,gps_timestamp\n')
-            while self.isStarted:
-                try:
-                    report = self.gps_session.next()
-                    if self.printAll:
-                        print(report)
-                    # Wait for a 'TPV' report and display the current time
-                    local_timestamp = datetime.timestamp(datetime.now())
-                    if report['class'] == 'TPV' and report['mode'] > 1:
-                        lat = report['lat']
-                        lon = report['lon']
-                        self.lats.append(lat)
-                        self.longs.append(lon)
-                        self.latlongs.append(str(lat))
-                        self.latlongs.append(str(lon))
-                        # store data in csv file
-                        f.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
-                    else:
-                        print("GPS not returning latitude or longitude")
+        self.gps_writer.write('latitude,longitude,gps_timestamp\n')
+        try:
+            report = self.gps_session.next()
+            if self.printAll:
+                print(report)
+            # Wait for a 'TPV' report and display the current time
+            local_timestamp = datetime.timestamp(datetime.now())
+            if report['class'] == 'TPV' and report['mode'] > 1:
+                lat = report['lat']
+                lon = report['lon']
+                self.lats.append(lat)
+                self.longs.append(lon)
+                self.latlongs.append(str(lat))
+                self.latlongs.append(str(lon))
+                # store data in csv file
+                self.gps_writer.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
+            else:
+                print("GPS not returning latitude or longitude")
 
-                    if local_timestamp-self.start_timestamp >self.max_duration:
-                        print(self.max_duration,"seconds elapsed")
-                        break
-                except KeyError:
-                    break
-                except StopIteration:
-                    self.gps_session = None
-                    print("GPSD has terminated")
+            if local_timestamp-self.start_timestamp >self.max_duration:
+                print(self.max_duration,"seconds elapsed")
+                break
+        except KeyError:
+            break
+        except StopIteration:
+            # self.gps_session = None
+            print("GPSD has terminated")
 
     def initialize_camera(self):
         self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
