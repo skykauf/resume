@@ -37,7 +37,7 @@ class DataRecorder:
         self.gps_session = gps.gps("localhost", "2947")
         self.gps_session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
         self.gps_writer = open(self.gps_filepath,'w')
-
+        self.gps_writer.write('latitude,longitude,gps_timestamp\n')
         self.lats=[]
         self.longs=[]
         self.latlongs=[]
@@ -49,7 +49,6 @@ class DataRecorder:
         print("Started camera")
 
     def record_gps(self):
-        self.gps_writer.write('latitude,longitude,gps_timestamp\n')
         try:
             report = self.gps_session.next()
             if self.printAll:
