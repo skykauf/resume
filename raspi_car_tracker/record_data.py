@@ -43,6 +43,11 @@ class DataRecorder:
         self.latlongs=[]
         print("Started GPS")
 
+    def initialize_camera(self):
+        self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
+        self.camera_stream = cv2.VideoCapture(0)
+        print("Started camera")
+        
     def record_gps(self):
         self.gps_writer.write('latitude,longitude,gps_timestamp\n')
         try:
@@ -69,10 +74,6 @@ class DataRecorder:
         except Exception as E:
             print("Error with gps recording")
             print("GPSD has terminated")
-
-    def initialize_camera(self):
-        self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
-        self.camera_stream = cv2.VideoCapture(0)
         
     def record_camera(self):
         ret, frame = self.camera_stream.read()
@@ -130,6 +131,10 @@ recorder = DataRecorder(100)
 
 recorder.initialize_gps()
 recorder.initialize_camera()
+
+for i in range(5):
+    recorder.record_gps()
+    recorder.record_camera()
 
 recorder.shutdown_gps()
 recorder.shutdown_camera()
