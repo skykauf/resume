@@ -47,7 +47,7 @@ class DataRecorder:
         self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
         self.camera_stream = cv2.VideoCapture(0)
         print("Started camera")
-        
+
     def record_gps(self):
         self.gps_writer.write('latitude,longitude,gps_timestamp\n')
         try:
@@ -87,6 +87,7 @@ class DataRecorder:
             #     break
             # if not self.isStarted:
             #     break
+        print("frame recorded")
 
     def shutdown_gps(self):
         self.gps_session = None
