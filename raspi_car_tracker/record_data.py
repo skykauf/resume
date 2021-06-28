@@ -65,11 +65,9 @@ class DataRecorder:
 
             if local_timestamp-self.start_timestamp >self.max_duration:
                 print(self.max_duration,"seconds elapsed")
-                break
-        except KeyError:
-            break
-        except StopIteration:
-            # self.gps_session = None
+
+        except Exception as E:
+            print("Error with gps recording")
             print("GPSD has terminated")
 
     def initialize_camera(self):
