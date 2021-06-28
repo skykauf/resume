@@ -28,6 +28,7 @@ with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv')
     while True:
         try:
             report = session.next()
+            print(report)
             # Wait for a 'TPV' report and display the current time
             if report['class'] == 'TPV':
                 lat = report['lat']
@@ -47,8 +48,6 @@ with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv')
             pass
         except KeyboardInterrupt:
             quit()
-        except Exception as E:
-            print(E)
         except StopIteration:
             session = None
             print("GPSD has terminated")
