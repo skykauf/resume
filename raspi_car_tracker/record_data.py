@@ -6,36 +6,49 @@ from config import *
 import requests
 from PIL import Image
 from io import BytesIO
+import cv2
 
 # experimental
-import multiprocessing
+# import multiprocessing
 
 class DataRecorder:
     def __init__(self,max_dur=10000):
         self.isStarted = False
-        self.printAll=False
-        self.max_duration = max_dur
+        self.printAll=False # debugging variable
+        self.max_duration = max_dur # maximum number of seconds to collect data
         
+        # time metadata and save folder
         self.start_datetime = datetime.now()
-        self.script_start_datedir = os.path.join(datadir,self.start_datetime.strftime("%m-%d-%Y"))
         self.script_start_datetime = self.start_datetime.strftime("%m-%d-%Y_%H:%M:%S")
         self.start_timestamp = datetime.timestamp(self.start_datetime)
 
+        # save folder and filenames
+        self.script_start_datedir = os.path.join(datadir,self.start_datetime.strftime("%m-%d-%Y"))
         self.gps_filepath = os.path.join(self.script_start_datedir,"GPS_"+self.script_start_datetime+'.csv')
+        self.video_filepath = os.path.join(self.script_start_datedir,"camera_"+self.script_start_datetime+'.mp4')
+        
+        # sensor params
+        self.fps = 20
+        self.camera_resolution = (640, 480) # change when better camera
+
 
     def initialize_gps(self):
         # Listen on port 2947 (gpsd) of localhost
-        session = gps.gps("localhost", "2947")
-        session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+        self.gps_session = gps.gps("localhost", "2947")
+        self.gps_session.stream(gps.WATCH_ENABLE | gps.WATCH_NEWSTYLE)
+        self.gps_writer = open(self.gps_filepath,'w')
+
         self.lats=[]
         self.longs=[]
         self.latlongs=[]
-        print("Starting record")
-        with open(self.gps_filepath,'w') as f:
+        print("Started GPS")
+
+    def record_gps(self):
+        with  as f:
             f.write('latitude,longitude,gps_timestamp\n')
-            while True:
+            while self.isStarted:
                 try:
-                    report = session.next()
+                    report = self.gps_session.next()
                     if self.printAll:
                         print(report)
                     # Wait for a 'TPV' report and display the current time
@@ -58,10 +71,38 @@ class DataRecorder:
                 except KeyError:
                     break
                 except StopIteration:
-                    session = None
+                    self.gps_session = None
                     print("GPSD has terminated")
+
+    def initialize_camera(self):
+        self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
+        self.camera_stream = cv2.VideoCapture(0)
+        
+    def record_camera(self):
+        ret, frame = self.camera_stream.read()
+        if ret:
+            self.camera_writer.write(frame)
+            cv2.imshow('Video', frame) # debugging, remove later
+        else:
+            print("No camera found")
+            # ret, frame = self.camera_stream.read()
+            # if cv2.waitKey(1) & 0xFF==ord("q"):
+            #     break
+            # if not self.isStarted:
+            #     break
+
+    def shutdown_gps(self):
+        self.gps_session = None
+        self.gps_writer.close()
+        print("GPS has terminated")
+
+    def shutdown_camera(self):
+        self.camera_stream.release()
+        self.camera_writer.release()
+        cv2.destroyAllWindows() # remove later
+        print("Camera has terminated")
                     
-    def write_gps_route_raw(self):
+    def write_gps_route_to_image(self): # TODO move to different class, call upon gps shutdown?
         # may want to reduce number of coordinates sent in map-query
         map_params = {"key":openstreetmap_apikey,"bestfit":",".join([str(min(self.lats)-.01), str(min(self.longs)-.01), str(max(self.lats)+.01), str(max(self.longs)+.01)]), "size":"1920, 960", "shape":",".join(self.latlongs)}
 
@@ -88,3 +129,11 @@ class DataRecorder:
 # GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 # GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 # GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
+
+recorder = DataRecorder(100)
+
+recorder.initialize_gps()
+recorder.initialize_camera()
+
+recorder.shutdown_gps()
+recorder.shutdown_camera()
