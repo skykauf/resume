@@ -56,6 +56,9 @@ class DataRecorder:
                 print(report)
             # Wait for a 'TPV' report and display the current time
             local_timestamp = datetime.timestamp(datetime.now())
+            while report['class'] != 'TPV' or report['mode'] <= 1:
+                report = self.gps_session.next()
+
             if report['class'] == 'TPV' and report['mode'] > 1:
                 lat = report['lat']
                 lon = report['lon']
