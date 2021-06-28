@@ -47,6 +47,8 @@ with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv')
             pass
         except KeyboardInterrupt:
             quit()
+        except Exception as E:
+            print(E)
         except StopIteration:
             session = None
             print("GPSD has terminated")
