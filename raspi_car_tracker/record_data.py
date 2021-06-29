@@ -46,8 +46,14 @@ class DataRecorder:
         print("Started GPS")
 
     def initialize_camera(self):
+        # self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
         self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
         self.camera_stream = cv2.VideoCapture(0)
+        codec = cv2.VideoWriter_fourcc(	'M', 'J', 'P', 'G'	)
+        self.camera_stream.set(6, codec)
+        self.camera_stream.set(5, 30)
+        self.camera_stream.set(3, 1920)
+        self.camera_stream.set(4, 1080)
         self.num_camera_frames = 0
         print("Started camera")
 
