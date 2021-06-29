@@ -31,6 +31,7 @@ class DataRecorder:
         # sensor params
         self.fps = 20
         self.camera_resolution = (640, 480) # change when better camera
+        self.camera_resolution = (1920, 1080) # change when better camera
 
 
     def initialize_gps(self):
@@ -145,4 +146,4 @@ for i in range(50):
 recorder.shutdown_gps()
 recorder.shutdown_camera()
 
-write_gps_route_to_image()
+recorder.write_gps_route_to_image()
