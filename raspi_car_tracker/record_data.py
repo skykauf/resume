@@ -92,7 +92,7 @@ class DataRecorder:
             #     break
             # if not self.isStarted:
             #     break
-        print(self.num_camera_frame, "frames recorded")
+        print(self.num_camera_frames, "frames recorded")
 
     def shutdown_gps(self):
         self.gps_session = None
