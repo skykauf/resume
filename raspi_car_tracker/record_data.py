@@ -9,12 +9,12 @@ from io import BytesIO
 import cv2
 
 # experimental
-# import multiprocessing
+import multiprocessing
 
 class DataRecorder:
     def __init__(self,max_dur=10000):
         self.isStarted = False
-        self.printAll=False # debugging variable
+        self.printAll=True # debugging variable
         self.max_duration = max_dur # maximum number of seconds to collect data
         
         # time metadata and save folder
