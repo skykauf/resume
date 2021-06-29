@@ -140,12 +140,12 @@ class DataRecorder:
 # GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 10 to be an input pin and set initial value to be pulled low (off)
 # GPIO.add_event_detect(10,GPIO.RISING,callback=button_callback) # Setup event on pin 10 rising edge
 
-recorder = DataRecorder(100)
+recorder = DataRecorder(10000)
 
 recorder.initialize_gps()
 recorder.initialize_camera()
 
-for i in range(5000):
+for i in range(50000):
     recorder.record_gps()
     recorder.record_camera()
 
