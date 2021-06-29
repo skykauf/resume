@@ -145,7 +145,7 @@ recorder = DataRecorder(100)
 recorder.initialize_gps()
 recorder.initialize_camera()
 
-for i in range(50):
+for i in range(5000):
     recorder.record_gps()
     recorder.record_camera()
 
