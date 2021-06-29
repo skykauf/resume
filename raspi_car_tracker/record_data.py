@@ -90,7 +90,7 @@ class DataRecorder:
             #     break
             # if not self.isStarted:
             #     break
-        print("frame recorded")
+        print(len(self.camera_writer), "frames recorded")
 
     def shutdown_gps(self):
         self.gps_session = None
@@ -142,3 +142,5 @@ for i in range(50):
 
 recorder.shutdown_gps()
 recorder.shutdown_camera()
+
+write_gps_route_to_image()
