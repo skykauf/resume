@@ -47,6 +47,7 @@ class DataRecorder:
     def initialize_camera(self):
         self.camera_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), self.fps, self.camera_resolution, True)
         self.camera_stream = cv2.VideoCapture(0)
+        self.num_camera_frames = 0
         print("Started camera")
 
     def record_gps(self):
@@ -82,6 +83,7 @@ class DataRecorder:
         ret, frame = self.camera_stream.read()
         if ret:
             self.camera_writer.write(frame)
+            self.num_camera_frames +=1
             cv2.imshow('Video', frame) # debugging, remove later
         else:
             print("No camera found")
@@ -90,7 +92,7 @@ class DataRecorder:
             #     break
             # if not self.isStarted:
             #     break
-        print(len(self.camera_writer), "frames recorded")
+        print(self.num_camera_frame, "frames recorded")
 
     def shutdown_gps(self):
         self.gps_session = None
