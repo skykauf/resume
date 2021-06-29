@@ -24,6 +24,7 @@ class DataRecorder:
 
         # save folder and filenames
         self.script_start_datedir = os.path.join(datadir,self.start_datetime.strftime("%m-%d-%Y"))
+        os.makedirs(script_start_datedir,exist_ok=True)
         self.gps_filepath = os.path.join(self.script_start_datedir,"GPS_"+self.script_start_datetime+'.csv')
         self.video_filepath = os.path.join(self.script_start_datedir,"camera_"+self.script_start_datetime+'.mp4')
         
