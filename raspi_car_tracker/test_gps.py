@@ -23,10 +23,14 @@ lats=[]
 longs=[]
 latlongs=[]
 print("Starting record")
+
 with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv'),'w') as f:
     f.write('latitude,longitude,gps_timestamp\n')
     print("writing to gps file")
     while True:
+        if local_timestamp-start_time >max_duration:
+            print(max_duration,"seconds elapsed")
+            break
         try:
             report = session.next()
             # Wait for a 'TPV' report and display the current time
@@ -42,9 +46,6 @@ with open(os.path.join(script_start_datedir,"GPS_"+script_start_datetime+'.csv')
                 # store data in csv file
                 f.write(str(lat)+','+str(lon)+','+str(local_timestamp)+'\n')
                 
-                if local_timestamp-start_time >max_duration:
-                    print(max_duration,"seconds elapsed")
-                    break
         except KeyError:
             pass
         except KeyboardInterrupt:
