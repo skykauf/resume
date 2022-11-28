@@ -1,4 +1,0 @@
-gps
-pandas
-pillow
-requests
