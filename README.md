@@ -33,6 +33,8 @@ Links to topics I enjoy:
 
 Technologies I endorse:
 
+https://github.com/pradyunsg/furo
+
 https://unix.stackexchange.com/questions/31414/how-can-i-pass-a-command-line-argument-into-a-shell-script
 
 https://developer.sportradar.com/docs/read/Home#getting-started
