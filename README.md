@@ -3,6 +3,8 @@ A repo to publicize my skills and experience
 
 My personal and business email is skylerkaufman@gmail.com
 Inquiry and advice are welcome
+Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvXrq4j6opaN7mpaMKMFhbA/edit?usp=sharing
+
 
 Links to topics I enjoy:
 
@@ -32,6 +34,8 @@ Links to topics I enjoy:
 
 
 Technologies I endorse:
+
+https://git-lfs.com/
 
 https://github.com/pradyunsg/furo
 
