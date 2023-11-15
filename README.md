@@ -2,7 +2,9 @@
 A repo to publicize my skills and experience
 
 My personal and business email is skylerkaufman@gmail.com
-Inquiry and advice are welcome
+
+Inquiry and advice welcome
+
 Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvXrq4j6opaN7mpaMKMFhbA/edit?usp=sharing
 
 
@@ -35,6 +37,8 @@ Links to topics I enjoy:
 
 Technologies I endorse:
 
+https://maps.google.com
+
 https://git-lfs.com/
 
 https://github.com/pradyunsg/furo
@@ -44,8 +48,6 @@ https://unix.stackexchange.com/questions/31414/how-can-i-pass-a-command-line-arg
 https://developer.sportradar.com/docs/read/Home#getting-started
 
 https://kb.objectrocket.com/redis/basic-redis-usage-example-part-2-pub-sub-in-depth-using-redis-python-719
-
-https://maps.google.com
 
 https://selenium-python.readthedocs.io/
 
