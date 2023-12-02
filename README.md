@@ -8,7 +8,13 @@ Inquiry and advice welcome
 Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvXrq4j6opaN7mpaMKMFhbA/edit?usp=sharing
 
 
-Links to topics I enjoy:
+## Links
+
+### Websites I made:
+
+[Beach Volleyball Dashboard](https://bit.ly/47sL1oO)
+
+### Topics topics I enjoy:
 
 [Alpha fold](https://www.deepmind.com/research/highlighted-research/alphafold)
 
@@ -35,7 +41,7 @@ Links to topics I enjoy:
 [Robotic Manipulation MIT class](https://manipulation.csail.mit.edu/)
 
 
-Technologies I endorse:
+### Technologies I endorse:
 
 https://maps.google.com
 
