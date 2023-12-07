@@ -14,7 +14,7 @@ Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvX
 
 [Beach Volleyball Dashboard](https://bit.ly/47sL1oO)
 
-### Topics topics I enjoy:
+### Topics I enjoy:
 
 [Alpha fold](https://www.deepmind.com/research/highlighted-research/alphafold)
 
