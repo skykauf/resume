@@ -40,6 +40,10 @@ Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvX
 
 [Robotic Manipulation MIT class](https://manipulation.csail.mit.edu/)
 
+[Real-time electricity tracker](https://www.iea.org/data-and-statistics/data-tools/real-time-electricity-tracker)
+
+[Electrify: An Optimist's Playbook for Our Clean Energy Future](https://mitpress.mit.edu/9780262545044/electrify/)
+
 
 ### Technologies I endorse:
 
