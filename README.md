@@ -12,7 +12,7 @@ Google Drive Resume: https://docs.google.com/document/d/1AKMwIO1Ev80xce9YzfSRGvX
 
 ### Websites I made:
 
-[Beach Volleyball Dashboard](https://bit.ly/47sL1oO)
+[Beach Volleyball Dashboard](https://bit.ly/volley-dash)
 
 ### Topics I enjoy:
 
